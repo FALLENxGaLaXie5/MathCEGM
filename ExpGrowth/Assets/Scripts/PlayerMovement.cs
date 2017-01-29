@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float increasedSpeed;
 
+    public Vector3 pubVelocity;
+
     private Vector3 targetPosition;
 
     Rigidbody playerObject;
@@ -22,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         speedCopy = speed;
         isMoving = false;
         anim = GetComponent<Animator>();
+        pubVelocity = playerObject.velocity;
     }
 
 
@@ -37,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
             isMoving = false;
             anim.SetBool("walking", false);
         }
+
+        if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+        {
+            speed = speed * speed;
+        }
     }
 
     void FixedUpdate()
@@ -45,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayer();
         }
+        pubVelocity = playerObject.velocity;
     }
 
     void MovePlayer()
