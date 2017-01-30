@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 pubVelocity;
 
     private Vector3 targetPosition;
+
+    public Text speedText;
 
     Rigidbody playerObject;
 
@@ -41,10 +45,17 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("walking", false);
         }
 
-        if (Input.GetKeyDown("w") || Input.GetKeyDown("s") || Input.GetKeyDown("a") || Input.GetKeyDown("d"))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            speedCopy = speed;
             speed = speed * speed;
         }
+        else if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            speed = speed / speedCopy;
+        }
+
+        displayText();
     }
 
     void FixedUpdate()
@@ -61,5 +72,9 @@ public class PlayerMovement : MonoBehaviour
         playerObject.AddForce(transform.forward * speed);
     }
 
+    void displayText()
+    {
+        speedText.text = "Speed: " + this.speed;
+    }
 
 }
